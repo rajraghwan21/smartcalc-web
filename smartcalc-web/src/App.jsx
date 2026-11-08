@@ -67,6 +67,12 @@ export default function App() {
     if (/^(sin|cos|tan|asin|acos|atan|ln|log|√|abs)$/.test(k)) return ins(k + '(', 'v')
     if (/^[+−×÷^]$/.test(k)) return ins(k, 'o')
     if (k === '%' || k === '!') return ins(k, 'p')
+    if (k === '.') {
+      const base = done ? '' : expr
+      const seg = base.split(/[^\d.]/).pop()
+      if (seg.includes('.')) return
+      return ins(seg === '' ? '0.' : '.', 'v')
+    }
     ins(k, 'v')
   }
   const latest = useRef(); latest.current = press
